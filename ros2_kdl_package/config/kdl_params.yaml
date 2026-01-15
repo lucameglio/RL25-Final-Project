@@ -1,0 +1,23 @@
+ros2_kdl_node:
+  ros__parameters:
+    # Trajectory parameters
+    traj_duration: 4.0
+    acc_duration: 0.5
+    total_time: 5.0
+    trajectory_len: 300
+    Kp: 5.0
+    only_server: true
+
+    # End-effector target position
+    end_position_x: 0.28
+    end_position_y: -0.01
+    end_position_z: 0.03
+
+    # Command interface and control
+    cmd_interface: "velocity"        # Options: "position", "velocity", "effort"
+    ctrl: "velocity_ctrl"            # Options: "velocity_ctrl", "velocity_ctrl_null", "vision_ctrl"
+
+    # Trajectory type and s_type
+    traj_type: "linear"              # Options: "linear", "circular"
+    s_type: "trapezoidal"            # Options: "trapezoidal", "cubic"
+

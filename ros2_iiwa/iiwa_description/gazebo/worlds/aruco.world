@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+
+  <world name="aruco_world">
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Sun</uri>
+    </include>
+ 
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Ground Plane</uri>
+    </include>
+
+    <include>
+      <uri>
+        model://arucotag
+      </uri>
+      <name>arucotag</name>
+      <pose>-0.2 -0.73 0.48 2.48 1.22 -3.05</pose>
+    </include>
+    
+    <gravity>0 0 -9.81</gravity>
+
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>

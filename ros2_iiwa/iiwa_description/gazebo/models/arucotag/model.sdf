@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.7">
+  <model name="arucotag">
+    <static>true</static>
+    <link name="base_link">
+      <visual name="aruco_visual">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>0.2 0.2</size>
+          </plane>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0 0 0 1</specular>
+          <emissive>0 0 0 1</emissive>
+          <pbr>
+            <metal>
+              <albedo_map>model://arucotag/aruco-201.png</albedo_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+
