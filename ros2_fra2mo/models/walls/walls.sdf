@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="walls">
+    <static>true</static>
+    <link name="link">
+      <pose>0.37 12.5 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+            <mesh>
+              <uri>
+                model://walls/mesh/walls.stl
+              </uri>
+              <scale>
+                0.9 0.9 0.1
+              </scale>
+            </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>true</cast_shadows>
+        <geometry>
+            <mesh>
+              <uri>
+                model://walls/mesh/walls.stl
+              </uri>
+              <scale>
+                0.9 0.9 0.1
+              </scale>
+            </mesh>
+        </geometry>
+        <material> <!-- color soft yellow -->
+          <ambient>1 0 0 1</ambient>
+          <diffuse>1 0 0 1</diffuse>
+          <specular>0 0 0 0</specular>
+          <emissive>0 0 0 1</emissive>
+        </material> 
+      </visual>
+    </link>
+  </model>
+
+</sdf>

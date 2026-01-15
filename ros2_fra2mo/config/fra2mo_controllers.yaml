@@ -1,0 +1,25 @@
+/fra2mo/controller_manager:
+  ros__parameters:
+    update_rate: 225
+    
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    
+    fra2mo_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+/fra2mo/joint_state_broadcaster:
+  ros__parameters:
+    publish_rate: 50
+
+/fra2mo/fra2mo_gripper_controller:
+  ros__parameters:
+    joints:
+      - fra2mo_left_finger_joint
+      - fra2mo_right_finger_joint
+      - fra2mo_lift_joint
+    command_interfaces:
+      - position              
+    state_interfaces:
+      - position
+    publish_rate: 20

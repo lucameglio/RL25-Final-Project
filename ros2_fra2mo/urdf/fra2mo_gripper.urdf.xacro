@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="fra2mo_gripper" params="parent">
+
+    <link name="fra2mo_gripper_base">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/visual/fra2mo_fixed_base.stl"
+                scale="0.001 0.001 0.0015"/>
+        </geometry>
+        <material name="grey">
+          <color rgba="0.5 0.5 0.5 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/collision/fra2mo_fixed_base.stl"
+                scale="0.001 0.001 0.0015"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="1e-4" ixy="0" ixz="0"
+                 iyy="1e-4" iyz="0"
+                 izz="1e-4"/>
+      </inertial>
+    </link>
+
+    <joint name="fra2mo_gripper_mount" type="fixed">
+      <parent link="${parent}"/>
+      <child link="fra2mo_gripper_base"/>
+      <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+    </joint>
+
+    <link name="fra2mo_lift_carriage">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/visual/fra2mo_lift.stl"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="dark_grey">
+          <color rgba="0.3 0.3 0.3 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/collision/fra2mo_lift.stl"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="1e-4" ixy="0" ixz="0"
+                 iyy="1e-4" iyz="0"
+                 izz="1e-4"/>
+      </inertial>
+    </link>
+
+    <joint name="fra2mo_lift_joint" type="prismatic">
+      <parent link="fra2mo_gripper_base"/>
+      <child link="fra2mo_lift_carriage"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-0.01" upper="0.30" effort="100" velocity="0.3"/>
+    </joint>
+
+    <link name="fra2mo_left_finger">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/visual/fra2mo_left_finger.stl"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/collision/fra2mo_left_finger.stl"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>5.0</mu>
+              <mu2>5.0</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="1e-4" ixy="0" ixz="0"
+                 iyy="1e-4" iyz="0"
+                 izz="1e-4"/>
+      </inertial>
+    </link>
+
+    <joint name="fra2mo_left_finger_joint" type="prismatic">
+      <parent link="fra2mo_lift_carriage"/>
+      <child link="fra2mo_left_finger"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-0.01" upper="0.55" effort="150" velocity="0.2"/>
+    </joint>
+
+    <link name="fra2mo_right_finger">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/visual/fra2mo_right_finger.stl"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find ros2_fra2mo)/meshes/gripper/collision/fra2mo_right_finger.stl"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>5.0</mu>
+              <mu2>5.0</mu2>
+              <slip1>0.0</slip1>
+              <slip2>0.0</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="1e-4" ixy="0" ixz="0"
+                 iyy="1e-4" iyz="0"
+                 izz="1e-4"/>
+      </inertial>
+    </link>
+
+    <joint name="fra2mo_right_finger_joint" type="prismatic">
+      <parent link="fra2mo_lift_carriage"/>
+      <child link="fra2mo_right_finger"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.01" upper="0.55" effort="200" velocity="0.2"/>
+    </joint>
+
+    <ros2_control name="GazeboSimSystem" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+
+      <joint name="fra2mo_lift_joint">
+        <command_interface name="position">
+          <param name="min">0.0</param>
+          <param name="max">0.15</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+
+      <joint name="fra2mo_left_finger_joint">
+        <command_interface name="position">
+          <param name="min">0.0</param>
+          <param name="max">0.55</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+
+      <joint name="fra2mo_right_finger_joint">
+        <command_interface name="position">
+          <param name="min">0.0</param>
+          <param name="max">0.55</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>
